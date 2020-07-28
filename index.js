@@ -9,6 +9,19 @@ app.get('/', (req, res) => {
 	res.send('<h3>Site works.</h3>');
 });
 
+class Friend {
+	constructor(id, fn, { firstName, lastName, gender, language, email }) {
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.gender = gender;
+		this.language = language;
+		this.email = email;
+	}
+}
+
+const friendDatabase = {};
+
 const root = {
 	friend: () => {
 		return {
@@ -17,8 +30,17 @@ const root = {
 			lastName: "Cook",
 			gender: "male",
 			language: "English",
-			email: "james@lsdkfjsdjf.com"
+			emails: [
+				{ email: "james@lsdkfjsdjf.com" },
+				{ email: "john323@lsdkfjsdjf.com" }
+			]
 		}
+	},
+	createFriend: ({ input }) => {
+		let id = require('crypto').randomBytes(10).toString('hex');
+		friendDatabase[id] = input;
+		console.log(friendDatabase);
+		return new Friend(id, input.firstName, input);
 	}
 };
 
